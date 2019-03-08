@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+package protos;
+
+//#gw#import "google/api/annotations.proto";
+
+service CrawlerAMService {
+
+    rpc CheckUpdate (CrawlerConfigRequest) returns (CrawlerConfigReply) {
+        //#gw#  option (google.api.http) = {
+        //#gw#  post: "/v1/crawler_am/check_update"
+        //#gw#  body: "*"
+        //#gw#  };
+
+    }
+    rpc CollectHistory (CrawlerTaskRequest) returns (CrawlerTaskReply) {
+        //#gw#  option (google.api.http) = {
+        //#gw#  post: "/v1/crawler_am/collect_history"
+        //#gw#  body: "*"
+        //#gw#  };
+
+    }
+
+}
+
+message CrawlerConfigRequest {
+
+    repeated CheckRequest checkList = 1;
+}
+
+message CheckRequest {
+    // apkName: 查找的app name
+    string packageName = 1;
+    // url: 该项目apkmirror所在页面
+    string url = 2;
+    // version: 当前版本
+    string lastUploadTime = 3;
+
+}
+
+message CrawlerConfigReply {
+    repeated ApkDetailReply appInfoList = 1;
+}
+
+message CrawlerTaskRequest {
+    // package:包名
+    string packageName = 1;
+    // 页码
+    int32 page = 2;
+    //每页显示数目
+    int32 pageSize = 3;
+}
+
+message CrawlerTaskReply {
+    //apk 详情
+    repeated ApkDetailReply appInfoList = 1;
+    //apk  总数
+    int32 count = 2;
+
+}
+
+message ApkDetailReply {
+    // 唯一Id
+    string Id = 1;
+    // apk 包名
+    string queryName = 2;
+    // apk 名称
+    string apkName = 3;
+    // apk 图标
+    string apkIcon = 4;
+    // apk 版本名
+    string apkVersion = 5;
+    // apk 上传时间
+    string apkUpload = 6;
+    // apk 安装包大小
+    string apkSize = 7;
+    // apk 下载次数
+    string downloads = 8;
+    // apk 下载链接 同一个apk有不同的变种，会有多个url
+    repeated DownloadLink apkLink = 9;
+    // apk 查询时间
+    string updateTime = 10;
+}
+
+message ApkDownloadUploadeRequest {
+    // package:包名
+    string package = 1;
+    // link: 图片的原始连接
+    string link = 2;
+}
+
+message ApkDownloadUploadReply {
+    repeated ApkDetailReply appInfoList = 1;
+}
+
+message DownloadLink {
+    //apk相同版本变体名
+    string variantName = 1;
+    //下载链接
+    string downloadUrl = 2;
+    //版本号
+    string versionCode = 3;
+}

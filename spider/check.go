@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"time"
+
 )
 
 const (
@@ -15,6 +16,7 @@ const (
 
 func CheckAPKUpdate(name, apkurl, lastTime string) (err error) {
 	glog.Infoln("check start")
+
 	//设定Idetimeout和代理
 	//http://172.16.8.8:30011
 	purl, _ := url.Parse("http://172.16.8.8:31081")
